@@ -11,7 +11,6 @@ public class Item
     public string Color { get; set; } = string.Empty;
     public int Mileage { get; set; }
     public string ImageUrl { get; set; } = string.Empty;
-
     public Auction Auction { get; set; }
     public Guid AuctionId { get; set; }
 }

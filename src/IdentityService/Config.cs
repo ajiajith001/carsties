@@ -36,13 +36,25 @@ public static class Config
             //     AllowedScopes = { "openid", "profile", "scope2" }
             // },
 
-            new Client {
+            new() {
                 ClientId = "postman",
                 ClientName = "postman",
                 AllowedScopes = { "openid", "profile", "auctionApp" },
                 RedirectUris = { "https://www.getpostman.com/oauth2/callback" },
                 ClientSecrets = [new Secret("NotASecret".Sha256())],
                 AllowedGrantTypes = {GrantType.ResourceOwnerPassword}
+            },
+
+            new() {
+                ClientId = "nextApp",
+                ClientName = "NextApp",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+                AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                RequirePkce = false,
+                RedirectUris = { "http://localhost:3000/api/auth/callback/id-server" },
+                AllowOfflineAccess = true,
+                AllowedScopes = { "openid", "profile", "auctionApp" },
+                AccessTokenLifetime = 3600*24*30 // 30 days
             }
         };
 }

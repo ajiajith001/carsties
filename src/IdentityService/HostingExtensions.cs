@@ -4,7 +4,6 @@ using IdentityService.Models;
 using IdentityService.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace IdentityService;
@@ -29,13 +28,14 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+                options.IssuerUri = builder.Configuration["IssuerUri"];
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>()
+            .AddLicenseSummary()
             .AddProfileService<CustomProfileService>();
-            // .AddLicenseSummary();
 
         builder.Services.ConfigureApplicationCookie(options => {
             options.Cookie.SameSite = SameSiteMode.Lax;

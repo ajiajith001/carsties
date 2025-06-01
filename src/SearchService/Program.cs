@@ -20,6 +20,12 @@ builder.Services.AddMassTransit(x => {
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
     x.UsingRabbitMq((context, cfg) => {
 
+        cfg.Host(builder.Configuration["RabbitMq:Host"], h =>
+        {
+            h.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
+            h.Password(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
+        });
+
         // provide the comments for the below codes
         // the below code is used to configure the specific endpoint for the consumer
         // and also to configure the retry policy for the consumer , if the consumer fails to process the message

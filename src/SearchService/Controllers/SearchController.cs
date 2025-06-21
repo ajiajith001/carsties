@@ -18,7 +18,7 @@ public class SearchController : ControllerBase
         var seller = searchParams.Seller;
         var winner = searchParams.Winner;
         var orderBy = searchParams.OrderBy;
-        var filter = searchParams.Filter;
+        var filterBy = searchParams.FilterBy;
 
         var query = DB.PagedSearch<Item, Item>();
         query.Sort(x => x.Ascending(a => a.Make));
@@ -35,7 +35,7 @@ public class SearchController : ControllerBase
             _ => query.Sort(x => x.Ascending(a => a.AuctionEnd)),
         };
 
-        query = filter switch 
+        query = filterBy switch 
         {
             "finished" => query.Match(x => x.AuctionEnd < DateTime.UtcNow),
             "endingSoon" => query.Match(x => x.AuctionEnd < DateTime.UtcNow.AddHours(6)

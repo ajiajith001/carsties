@@ -8,6 +8,6 @@ public class RequestParams
     public string? Seller { get; set; }
     public string? Winner { get; set; }
     public string? OrderBy { get; set; }
-    public string? Filter { get; set; }
+    public string? FilterBy { get; set; }
 }
 
